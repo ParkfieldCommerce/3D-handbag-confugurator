@@ -1,0 +1,22 @@
+{
+    "map": "Material-Aluminum001var01-COLOR.png",
+    "color": {
+        "r": 0.5,
+        "g": 0.5,
+        "b": 0.5
+    },
+    "normalMap": "Material-Aluminum001var01-NORMAL.png",
+    "normalScale": 10.0,
+    "metalRoughnessMap": "Material-Aluminum001var01-METALROUGH.png",
+    "metalness": 1.0,
+    "roughness": 0.6,
+    "aoMap": null,
+    "aoMapIntensity": 0.0,
+    "emissive": {
+        "r": 1,
+        "g": 1,
+        "b": 1
+    },
+    "emissiveMap": null,
+    "emissiveIntensity": null
+}

@@ -1,0 +1,22 @@
+{
+    "map": "Material-Leather003var03-COLOR.jpg",
+    "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1
+    },
+    "normalMap": "Material-Leather003var03-NORMAL.jpg",
+    "normalScale": 0.2,
+    "metalRoughnessMap": "Material-Leather003var03-METALROUGH.jpg",
+    "metalness": 0,
+    "roughness": 0.4,
+    "aoMap": "Material-Leather003var03-AO.jpg",
+    "aoMapIntensity": 0.2,
+    "emissive": {
+        "r": 1,
+        "g": 1,
+        "b": 1
+    },
+    "emissiveMap": null,
+    "emissiveIntensity": null
+}

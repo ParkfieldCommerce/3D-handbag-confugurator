@@ -1,0 +1,22 @@
+{
+    "map": "Material-PaintSplatter01var01-COLOR.jpg",
+    "color": {
+        "r": 0.8,
+        "g": 0.8,
+        "b": 0.8
+    },
+    "normalMap": "Material-PaintSplatter01var01-NORMAL.jpg",
+    "normalScale": 0.5,
+    "metalRoughnessMap": "Material-PaintSplatter01var01-METALROUGH.jpg",
+    "metalness": 0.0,
+    "roughness": 0.4,
+    "aoMap": null,
+    "aoMapIntensity": 0.0,
+    "emissive": {
+        "r": 1,
+        "g": 1,
+        "b": 1
+    },
+    "emissiveMap": null,
+    "emissiveIntensity": null
+}

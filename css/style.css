@@ -1,0 +1,305 @@
+@font-face {
+    font-family: 'Gotham-Book';
+    src: url('../fonts/Gotham-Book.eot?#iefix') format('embedded-opentype'), url('../fonts/Gotham-Book.otf') format('opentype'),
+    url('../fonts/Gotham-Book.woff') format('woff'), url('../fonts/Gotham-Book.ttf') format('truetype'), url('../fonts/Gotham-Book.svg#Gotham-Book') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gotham-Bold';
+    src: url('../fonts/Gotham-Bold.eot?#iefix') format('embedded-opentype'), url('../fonts/Gotham-Bold.otf') format('opentype'),
+    url('../fonts/Gotham-Bold.woff') format('woff'), url('../fonts/Gotham-Bold.ttf') format('truetype'), url('../fonts/Gotham-Bold.svg#Gotham-Bold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Gotham-Book';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1;
+}
+
+a.active, a:focus, button:focus, button.active {
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:focus, a:hover, a:active {
+    outline: 0;
+    box-shadow: 0;
+}
+
+a:focus, a:hover {
+    text-decoration: none;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+a, button {
+    text-decoration: none;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+ul li {
+    list-style: none;
+}
+
+p {
+    margin: 0;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+}
+
+/* ================== Custom Css ===============*/
+.wrapper .container-fluid {
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+header {
+    padding-top: 43px;
+}
+
+/* Product Section
+--------------------------------------------*/
+.content-sec{
+    padding-bottom: 70px;
+}
+.product-block {
+    position: relative;
+    padding-left: 80px;
+    width: 100%;
+    height: 100%;
+}
+
+.product-block .product-img {
+    width: 100%;
+    height: 100%;
+}
+
+.product-block .product-img img {
+    display: block;
+    margin: 0 auto;
+
+}
+
+.product-detail {
+    position: absolute;
+    left: 0;
+    top: 60%;
+    -webkit-transform: translate(0, -60%);
+    -moz-transform: translate(0, -60%);
+    -ms-transform: translate(0, -60%);
+    -o-transform: translate(0, -60%);
+    transform: translate(0, -60%);
+}
+
+.product-detail ul li:first-child {
+    margin-bottom: 50px;
+}
+
+.product-detail ul li a {
+    font-size: 18px;
+    color: #222222;
+    font-family: 'Gotham-Book';
+    text-align: center;
+}
+
+.product-detail ul li a img {
+    display: block;
+    margin: 0 auto 15px;
+}
+
+
+/* Product Accordion
+-------------------------------------*/
+.product-accord {
+    background-color: #ffffff;
+    box-shadow: 0px 0px 7px -1px #4b4646;
+    display: inline-block;
+    width: 100%;
+    margin-top: -70px;
+    max-width: 390px;
+    float: right;
+}
+
+.product-accord .card-header {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+}
+
+.product-accord .card {
+    border: none;
+}
+
+.product-accord .card-header .imgHolder img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ffffff;
+    -webkit-box-shadow: 0px 2px 5px -1px rgba(51, 51, 51, 0.3686274509803922);
+    -moz-box-shadow: 0px 2px 5px -1px rgba(51, 51, 51, 0.3686274509803922);
+    box-shadow: 0px 2px 5px -1px rgba(51, 51, 51, 0.3686274509803922);
+}
+
+.product-accord .card-header .imgHolder {
+    float: left;
+}
+.product-accord .card{
+    border-bottom:1px solid rgba(75, 70, 70, 0.15);
+}
+
+.product-accord .card-header .card-link.collapsed:after{
+    content: '';
+    width: 28px;
+    height: 16px;
+    background: url("../img/arrow.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    -webkit-transform: translate(0,-50%);
+    -moz-transform: translate(0,-50%);
+    -ms-transform: translate(0,-50%);
+    -o-transform: translate(0,-50%);
+    transform: translate(0,-50%);
+}
+.product-accord .card-header .card-link:after{
+    content: '';
+    width: 28px;
+    height: 16px;
+    background: url("../img/arrow.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    -webkit-transform: translate(0,-50%) rotate(180deg);
+    -moz-transform: translate(0,-50%) rotate(180deg);
+    -ms-transform: translate(0,-50%) rotate(180deg);
+    -o-transform: translate(0,-50%) rotate(180deg);
+    transform: translate(0,-50%) rotate(180deg);
+}
+.product-accord .card-header .card-link{
+    display: block;
+    padding: 20px 30px 25px;
+    position: relative;
+    border-bottom: 1px solid transparent;
+}
+
+.product-accord .card-header strong {
+    font-family: 'Gotham-Bold';
+    color: #222222;
+    display: block;
+    text-transform: capitalize;
+    margin-bottom: 15px;
+}
+
+.product-accord .card-header span {
+    font-family: 'Gotham-Book';
+    color: #222222;
+    display: block;
+    text-transform: capitalize;
+}
+
+.detailbox {
+    overflow: hidden;
+    padding: 12px 0 12px 15px;
+}
+
+.leather-d ul li {
+    float: left;
+    width: 50%;
+    margin-bottom: 40px;
+}
+
+.leather-d ul li a img {
+    height: 53px;
+    width: 53px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 10px;
+    border:1px solid transparent;
+    padding: 2px;
+}
+
+.leather-d ul li a {
+    font-family: 'Gotham-Book';
+    color: #222222;
+    display: block;
+    text-transform: capitalize;
+    text-align: center;
+}
+.leather-d ul li a.active img{
+    border-color: #0069d9;
+}
+.status .custom-control-input:focus~.custom-control-label::before {
+    box-shadow: none;
+}
+.status .custom-control-label::before,.status .custom-control-label::after {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    top: 0;
+}
+.status .custom-control-label {
+    line-height: 42px;
+}
+.status .custom-control {
+    min-height: 42px;
+    padding-left: 55px;
+}
+.status ul li{
+    float: left;
+    width: 50%;
+    padding: 20px;
+}
+.status ul li:first-child{
+    border-right: 1px solid rgba(75, 70, 70, 0.15);
+}
+.status ul li a{
+    font-family: 'Gotham-Book';
+    color: #222222;
+    display: block;
+    text-transform: capitalize;
+}
+.status ul li img{
+    width: 42px;
+    height: 42px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+.status .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+    background-color: #6AC259;
+}

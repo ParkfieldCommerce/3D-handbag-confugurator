@@ -1,0 +1,22 @@
+{
+    "map": "Material-BlueOcean01var02-COLOR.jpg",
+    "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1
+    },
+    "normalMap": "Material-BlueOcean01var02-NORMAL.jpg",
+    "normalScale": 0.025,
+    "metalRoughnessMap": "Material-BlueOcean01var02-METALROUGH.jpg",
+    "metalness": 0,
+    "roughness": 0.95,
+    "aoMap": null,
+    "aoMapIntensity": 1,
+    "emissive": {
+        "r": 1,
+        "g": 1,
+        "b": 1
+    },
+    "emissiveMap": null,
+    "emissiveIntensity": null
+}

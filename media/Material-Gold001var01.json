@@ -1,0 +1,22 @@
+{
+    "map": "Material-Gold001var01-COLOR.png",
+    "color": {
+        "r": 0.719,
+        "g": 0.719,
+        "b": 0.719
+    },
+    "normalMap": "Material-Gold001var01-NORMAL.png",
+    "normalScale": 10.0,
+    "metalRoughnessMap": "Material-Gold001var01-METALROUGH.png",
+    "metalness": 1.0,
+    "roughness": 0.4,
+    "aoMap": null,
+    "aoMapIntensity": 0.0,
+    "emissive": {
+        "r": 1,
+        "g": 1,
+        "b": 1
+    },
+    "emissiveMap": null,
+    "emissiveIntensity": null
+}
