@@ -303,12 +303,13 @@ $(document).ready(function(){
                 $('.changeMat[data-material-name="Buckles and Rivets"][data-material-file="Material-Gold001var01.json"]').trigger('click');
             });
             $("#share").click(function(){
-                var variantString = ""
+                var variantString = "";
+                var baseURL = window.location.href.split('?')[0];
                 if(window.v3dConfigurator !== undefined && window.v3dConfigurator.currentVariant !== undefined) {
                     variantString = JSON.stringify(window.v3dConfigurator.currentVariant);
                 }
                 //$('#Field5').val('http://localhost/parkfield-event/index.html?'+encodeURIComponent('[{"name":"Front","file":"Material-Leather002var02.json"},{"name":"Back","file":"Material-AbstractAcrylic01var01.json"}]'));
-                $('#Field5').val('http://localhost/parkfield-event/index.html?'+encodeURIComponent(variantString));
+                $('#Field5').val(baseURL+encodeURIComponent(variantString));
                 $('#shareform').css('display', 'block');
                 $('#bg-overlay').css('display', 'block');
             });
