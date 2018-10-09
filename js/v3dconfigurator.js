@@ -146,7 +146,7 @@ $(document).ready(function(){
 
                 var search = window.location.search.substr(1);
                 if(search.length > 0) {
-                    var searchVariations = JSON.parse(decodeURIComponent(search));
+                    var searchVariations = JSON.parse(LZString.decompressFromEncodedURIComponent(search));
                     for(var serachKey in searchVariations) {
                         if (searchVariations.hasOwnProperty(serachKey)) {
                             $('.changeMat[data-material-name="'+serachKey+'"][data-material-file="'+searchVariations[serachKey]+'"]').trigger('click');
@@ -309,7 +309,7 @@ $(document).ready(function(){
                     variantString = JSON.stringify(window.v3dConfigurator.currentVariant);
                 }
                 //$('#Field5').val('http://localhost/parkfield-event/index.html?'+encodeURIComponent('[{"name":"Front","file":"Material-Leather002var02.json"},{"name":"Back","file":"Material-AbstractAcrylic01var01.json"}]'));
-                $('#Field5').val(baseURL+encodeURIComponent(variantString));
+                $('#Field5').val(baseURL+'?'+LZString.compressToEncodedURIComponent(variantString));
                 $('#shareform').css('display', 'block');
                 $('#bg-overlay').css('display', 'block');
             });
