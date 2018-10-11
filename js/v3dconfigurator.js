@@ -34,6 +34,8 @@ $(document).ready(function(){
         app.load(url, function() {
             window.pauseRender = true;
             app.myRender = app.render;
+
+            // only render when necessary
             var prevCameraPos = app.camera.position.clone();
             if(window.v3dConfigurator === undefined) {
                 window.v3dConfigurator = {};
@@ -52,6 +54,11 @@ $(document).ready(function(){
                     prevCameraPos = app.camera.position.clone();
                 }
             }
+            window.addEventListener('resize', onWindowResize, false);
+            function onWindowResize(){
+                window.v3dConfigurator.needsUpdate = true;
+            }
+            
             // Transparent Background
             app.scene.background = null;
             app.renderer.setClearColor(0x000000, 0);
