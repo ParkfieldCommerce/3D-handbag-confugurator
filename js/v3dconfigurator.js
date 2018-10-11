@@ -34,9 +34,22 @@ $(document).ready(function(){
         app.load(url, function() {
             window.pauseRender = true;
             app.myRender = app.render;
+            var prevCameraPos = app.camera.position.clone();
+            if(window.v3dConfigurator === undefined) {
+                window.v3dConfigurator = {};
+            }
+            window.v3dConfigurator.needsUpdate = true;
             app.render = function(){
                 if(!window.pauseRender) {
-                    app.myRender();
+                    var camDist = app.camera.position.distanceTo(prevCameraPos);
+                    if(camDist > 0.001 || window.v3dConfigurator.needsUpdate) {
+                        app.myRender();
+                        window.v3dConfigurator.needsUpdate = false;
+                    } else {
+                        // not rendering, because nothing changed
+                        // console.log("not rendering");
+                    }
+                    prevCameraPos = app.camera.position.clone();
                 }
             }
             // Transparent Background
@@ -166,9 +179,6 @@ $(document).ready(function(){
                 }
                 var dataMatFile = $(this).data("material-file");
 
-                if(window.v3dConfigurator === undefined) {
-                    window.v3dConfigurator = {};
-                }
                 if(window.v3dConfigurator.currentVariant === undefined) {
                     window.v3dConfigurator.currentVariant = {};
                 }
@@ -293,6 +303,7 @@ $(document).ready(function(){
                         if(typeof dataMatSettings.emissiveIntensity !== 'undefined') {
                             material.emissiveIntensity = dataMatSettings.emissiveIntensity;
                         }
+                        window.v3dConfigurator.needsUpdate = true;
                     });
                 });
             });
