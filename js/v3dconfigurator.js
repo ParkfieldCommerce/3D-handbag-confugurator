@@ -172,7 +172,7 @@ $(document).ready(function(){
                             if (searchVariations.hasOwnProperty(serachKey)) {
                                 var currSettings = searchVariations[serachKey];
                                 if(typeof currSettings == 'string') {
-                                    $('.changeMat[data-material-name=\\\''+serachKey+'\\\'][data-material-file=\\\''+currSettings+'\\\']').trigger('click');
+                                    $('.changeMat[data-material-name="'+serachKey+'"][data-material-file="'+currSettings+'"]').trigger('click');
                                 } else {
                                     $('.changeMat[data-material-name="'+serachKey+'"]').data('material-settings', currSettings).trigger('click');
                                 }
