@@ -62,8 +62,14 @@
 @media (max-width: 767px) {
     .product-accord{
         display: table;
-        margin: 20px auto 0;
+        margin-left: 5vw;
+        margin-right: 5vw;
+        margin-top: 20px;
+        margin-bottom: 0;
         float: none;
+    }
+    #accordion{
+        width: 90vw;
     }
     .product-detail ul li a img {
         margin-bottom: 10px;
@@ -89,33 +95,22 @@
     .product-block{
         padding-top: 30px;
     }
-
-
+    #container3d{
+        width:100%;
+        height:50vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+    }
+    #mainarea{
+        padding: 0;
+    }
+    .leather-d ul li {
+        margin-bottom: 5px;
+    }
 }
 
 @media (max-width: 576px) {
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
