@@ -5,12 +5,12 @@
         "g": 1,
         "b": 1
     },
-    "normalMap": "Material-Leather003var03-NORMAL.jpg",
+    "normalMap": "Material-Leather003var03-NORMAL.png",
     "normalScale": 0.2,
-    "metalRoughnessMap": "Material-Leather003var03-METALROUGH.jpg",
+    "metalRoughnessMap": "Material-Leather003var03-METALROUGH.png",
     "metalness": 0,
     "roughness": 0.4,
-    "aoMap": "Material-Leather003var03-AO.jpg",
+    "aoMap": "Material-Leather003var03-AO.png",
     "aoMapIntensity": 0.2,
     "emissive": {
         "r": 1,

@@ -3169,16 +3169,13 @@
             "uri" : "Material-Leather003var03-COLOR.jpg"
         }, 
         {
-            "uri" : "Material-Leather003var03-METALROUGH.jpg"
+            "uri" : "Material-Leather003var03-METALROUGH.png"
         }, 
         {
-            "uri" : "Material-Leather003var03-NORMAL.jpg"
+            "uri" : "Material-Leather003var03-NORMAL.png"
         }, 
         {
-            "uri" : "Material-Leather003var03-AO.jpg"
-        }, 
-        {
-            "uri" : "Material-Gold001var01-COLOR.png"
+            "uri" : "Material-Gold001var01-COLOR.jpg"
         }, 
         {
             "uri" : "Material-Gold001var01-NORMAL.png"
@@ -3190,31 +3187,28 @@
             "uri" : "Material-Leather002var02-COLOR.jpg"
         }, 
         {
-            "uri" : "Material-Leather002var02-METALROUGH.jpg"
+            "uri" : "Material-Leather002var02-METALROUGH.png"
         }, 
         {
-            "uri" : "Material-Leather002var02-NORMAL.jpg"
+            "uri" : "Material-Leather002var02-NORMAL.png"
+        }, 
+        {
+            "uri" : "Material-Leather003var03-AO.png"
         }, 
         {
             "uri" : "Material-Fabric001var02-COLOR.jpg"
         }, 
         {
-            "uri" : "Material-Fabric001var02-METALROUGH.jpg"
+            "uri" : "Material-Fabric001var02-METALROUGH.png"
         }, 
         {
-            "uri" : "Material-Fabric001var02-NORMAL.jpg"
+            "uri" : "Material-Fabric001var02-NORMAL.png"
         }, 
         {
             "uri" : "stitching back COL.png"
         }, 
         {
-            "uri" : "stitching back NOR.png"
-        }, 
-        {
             "uri" : "stitching front COL.png"
-        }, 
-        {
-            "uri" : "stitching front NOR.png"
         }, 
         {
             "uri" : "Factory - Plastic Bags 1 Preview.jpg"
@@ -3232,10 +3226,6 @@
             "normalTexture" : {
                 "index" : 2, 
                 "scale" : 0.20000000298023224
-            }, 
-            "occlusionTexture" : {
-                "index" : 3, 
-                "strength" : 0.20000000298023224
             }, 
             "pbrMetallicRoughness" : {
                 "baseColorTexture" : {
@@ -3257,7 +3247,7 @@
             }, 
             "name" : "Buckles and Rivets", 
             "normalTexture" : {
-                "index" : 5, 
+                "index" : 4, 
                 "scale" : 10.0
             }, 
             "pbrMetallicRoughness" : {
@@ -3268,10 +3258,10 @@
                     1.0
                 ], 
                 "baseColorTexture" : {
-                    "index" : 4
+                    "index" : 3
                 }, 
                 "metallicRoughnessTexture" : {
-                    "index" : 6
+                    "index" : 5
                 }, 
                 "roughnessFactor" : 0.4000000059604645
             }
@@ -3285,16 +3275,20 @@
             }, 
             "name" : "Front", 
             "normalTexture" : {
-                "index" : 9, 
+                "index" : 8, 
                 "scale" : 0.25
+            }, 
+            "occlusionTexture" : {
+                "index" : 9, 
+                "strength" : 0.20000000298023224
             }, 
             "pbrMetallicRoughness" : {
                 "baseColorTexture" : {
-                    "index" : 7
+                    "index" : 6
                 }, 
                 "metallicFactor" : 0.0, 
                 "metallicRoughnessTexture" : {
-                    "index" : 8
+                    "index" : 7
                 }, 
                 "roughnessFactor" : 0.30000001192092896
             }
@@ -3312,7 +3306,7 @@
                 "scale" : 0.20000000298023224
             }, 
             "occlusionTexture" : {
-                "index" : 3, 
+                "index" : 9, 
                 "strength" : 0.20000000298023224
             }, 
             "pbrMetallicRoughness" : {
@@ -3348,7 +3342,7 @@
                 "baseColorTexture" : {
                     "index" : 14
                 }, 
-                "metallicFactor" : 0.5, 
+                "metallicFactor" : 0.0, 
                 "metallicRoughnessTexture" : {
                     "index" : 15
                 }
@@ -3363,9 +3357,6 @@
                 }
             }, 
             "name" : "Stitching Back", 
-            "normalTexture" : {
-                "index" : 18
-            }, 
             "pbrMetallicRoughness" : {
                 "baseColorTexture" : {
                     "index" : 17
@@ -3383,12 +3374,9 @@
                 }
             }, 
             "name" : "Stitching Front", 
-            "normalTexture" : {
-                "index" : 20
-            }, 
             "pbrMetallicRoughness" : {
                 "baseColorTexture" : {
-                    "index" : 19
+                    "index" : 18
                 }, 
                 "metallicFactor" : 0.0, 
                 "roughnessFactor" : 0.4000000059604645
@@ -3486,7 +3474,7 @@
                                         0.0
                                     ]
                                 ], 
-                                "texture" : 21, 
+                                "texture" : 19, 
                                 "type" : "TEX_ENVIRONMENT"
                             }
                         ]
@@ -5425,7 +5413,7 @@
                     "colorSpace" : "srgb"
                 }
             }, 
-            "name" : "Material-Leather003var03-COLOR.jpg", 
+            "name" : "Material-Leather003var03-COLOR.jpg.001", 
             "sampler" : 0, 
             "source" : 0
         }, 
@@ -5435,7 +5423,7 @@
                     "colorSpace" : "non-color"
                 }
             }, 
-            "name" : "Material-Leather003var03-METALROUGH.jpg", 
+            "name" : "Material-Leather003var03-METALROUGH.png", 
             "sampler" : 0, 
             "source" : 1
         }, 
@@ -5445,19 +5433,9 @@
                     "colorSpace" : "non-color"
                 }
             }, 
-            "name" : "Material-Leather003var03-NORMAL.jpg", 
+            "name" : "Material-Leather003var03-NORMAL.png", 
             "sampler" : 0, 
             "source" : 2
-        }, 
-        {
-            "extensions" : {
-                "S8S_v3d_texture_data" : {
-                    "colorSpace" : "non-color"
-                }
-            }, 
-            "name" : "Material-Leather003var03-AO.jpg", 
-            "sampler" : 0, 
-            "source" : 3
         }, 
         {
             "extensions" : {
@@ -5465,7 +5443,17 @@
                     "colorSpace" : "srgb"
                 }
             }, 
-            "name" : "Material-Gold001var01-COLOR.png", 
+            "name" : "Material-Gold001var01-COLOR.jpg", 
+            "sampler" : 0, 
+            "source" : 3
+        }, 
+        {
+            "extensions" : {
+                "S8S_v3d_texture_data" : {
+                    "colorSpace" : "non-color"
+                }
+            }, 
+            "name" : "Material-Gold001var01-NORMAL.png.001", 
             "sampler" : 0, 
             "source" : 4
         }, 
@@ -5475,19 +5463,9 @@
                     "colorSpace" : "non-color"
                 }
             }, 
-            "name" : "Material-Gold001var01-NORMAL.png", 
+            "name" : "Material-Gold001var01-METALROUGH.png.001", 
             "sampler" : 0, 
             "source" : 5
-        }, 
-        {
-            "extensions" : {
-                "S8S_v3d_texture_data" : {
-                    "colorSpace" : "non-color"
-                }
-            }, 
-            "name" : "Material-Gold001var01-METALROUGH.png", 
-            "sampler" : 0, 
-            "source" : 6
         }, 
         {
             "extensions" : {
@@ -5495,7 +5473,17 @@
                     "colorSpace" : "srgb"
                 }
             }, 
-            "name" : "Material-Leather002var02-COLOR.jpg", 
+            "name" : "Material-Leather002var02-COLOR.jpg.001", 
+            "sampler" : 0, 
+            "source" : 6
+        }, 
+        {
+            "extensions" : {
+                "S8S_v3d_texture_data" : {
+                    "colorSpace" : "non-color"
+                }
+            }, 
+            "name" : "Material-Leather002var02-METALROUGH.png", 
             "sampler" : 0, 
             "source" : 7
         }, 
@@ -5505,7 +5493,7 @@
                     "colorSpace" : "non-color"
                 }
             }, 
-            "name" : "Material-Leather002var02-METALROUGH.jpg", 
+            "name" : "Material-Leather002var02-NORMAL.png", 
             "sampler" : 0, 
             "source" : 8
         }, 
@@ -5515,19 +5503,9 @@
                     "colorSpace" : "non-color"
                 }
             }, 
-            "name" : "Material-Leather002var02-NORMAL.jpg", 
+            "name" : "Material-Leather003var03-AO.png", 
             "sampler" : 0, 
             "source" : 9
-        }, 
-        {
-            "extensions" : {
-                "S8S_v3d_texture_data" : {
-                    "colorSpace" : "srgb"
-                }
-            }, 
-            "name" : "Material-Leather003var03-COLOR.jpg", 
-            "sampler" : 0, 
-            "source" : 0
         }, 
         {
             "extensions" : {
@@ -5535,7 +5513,7 @@
                     "colorSpace" : "non-color"
                 }
             }, 
-            "name" : "Material-Leather003var03-METALROUGH.jpg", 
+            "name" : "Material-Leather003var03-METALROUGH.png", 
             "sampler" : 0, 
             "source" : 1
         }, 
@@ -5545,7 +5523,7 @@
                     "colorSpace" : "non-color"
                 }
             }, 
-            "name" : "Material-Leather003var03-NORMAL.jpg", 
+            "name" : "Material-Leather003var03-NORMAL.png", 
             "sampler" : 0, 
             "source" : 2
         }, 
@@ -5555,9 +5533,9 @@
                     "colorSpace" : "non-color"
                 }
             }, 
-            "name" : "Material-Leather003var03-AO.jpg", 
+            "name" : "Material-Leather003var03-AO.png", 
             "sampler" : 0, 
-            "source" : 3
+            "source" : 9
         }, 
         {
             "extensions" : {
@@ -5565,7 +5543,17 @@
                     "colorSpace" : "srgb"
                 }
             }, 
-            "name" : "Material-Fabric001var02-COLOR.jpg", 
+            "name" : "Material-Leather003var03-COLOR.jpg.001", 
+            "sampler" : 0, 
+            "source" : 0
+        }, 
+        {
+            "extensions" : {
+                "S8S_v3d_texture_data" : {
+                    "colorSpace" : "srgb"
+                }
+            }, 
+            "name" : "Material-Fabric001var02-COLOR.jpg.001", 
             "sampler" : 0, 
             "source" : 10
         }, 
@@ -5575,7 +5563,7 @@
                     "colorSpace" : "non-color"
                 }
             }, 
-            "name" : "Material-Fabric001var02-METALROUGH.jpg", 
+            "name" : "Material-Fabric001var02-METALROUGH.png", 
             "sampler" : 0, 
             "source" : 11
         }, 
@@ -5585,7 +5573,7 @@
                     "colorSpace" : "non-color"
                 }
             }, 
-            "name" : "Material-Fabric001var02-NORMAL.jpg", 
+            "name" : "Material-Fabric001var02-NORMAL.png", 
             "sampler" : 0, 
             "source" : 12
         }, 
@@ -5595,17 +5583,17 @@
                     "colorSpace" : "srgb"
                 }
             }, 
-            "name" : "stitching back COL.png", 
+            "name" : "stitching back COL.png.001", 
             "sampler" : 0, 
             "source" : 13
         }, 
         {
             "extensions" : {
                 "S8S_v3d_texture_data" : {
-                    "colorSpace" : "non-color"
+                    "colorSpace" : "srgb"
                 }
             }, 
-            "name" : "stitching back NOR.png", 
+            "name" : "stitching front COL.png.001", 
             "sampler" : 0, 
             "source" : 14
         }, 
@@ -5615,29 +5603,9 @@
                     "colorSpace" : "srgb"
                 }
             }, 
-            "name" : "stitching front COL.png", 
-            "sampler" : 0, 
-            "source" : 15
-        }, 
-        {
-            "extensions" : {
-                "S8S_v3d_texture_data" : {
-                    "colorSpace" : "non-color"
-                }
-            }, 
-            "name" : "stitching front NOR.png", 
-            "sampler" : 0, 
-            "source" : 16
-        }, 
-        {
-            "extensions" : {
-                "S8S_v3d_texture_data" : {
-                    "colorSpace" : "srgb"
-                }
-            }, 
             "name" : "Factory - Plastic Bags 1 Preview.jpg", 
             "sampler" : 0, 
-            "source" : 17
+            "source" : 15
         }
     ]
 }

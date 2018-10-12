@@ -76,47 +76,45 @@ $(document).ready(function(){
             var imagePromises = [];
             var images = 
                ['Material-AbstractAcrylic01var01-COLOR.jpg',
-                'Material-AbstractAcrylic01var01-METALROUGH.jpg',
-                'Material-AbstractAcrylic01var01-NORMAL.jpg',
+                'Material-AbstractAcrylic01var01-METALROUGH.png',
+                'Material-AbstractAcrylic01var01-NORMAL.png',
                 
-                'Material-Aluminum001var01-COLOR.png',
+                'Material-Aluminum001var01-COLOR.jpg',
                 'Material-Aluminum001var01-METALROUGH.png',
                 'Material-Aluminum001var01-NORMAL.png',
                 
                 'Material-BlueOcean01var02-COLOR.jpg',
-                'Material-BlueOcean01var02-METALROUGH.jpg',
-                'Material-BlueOcean01var02-NORMAL.jpg',
+                'Material-BlueOcean01var02-METALROUGH.png',
+                'Material-BlueOcean01var02-NORMAL.png',
                 
                 'Material-Fabric001var02-COLOR.jpg',
-                'Material-Fabric001var02-METALROUGH.jpg',
-                'Material-Fabric001var02-NORMAL.jpg',
+                'Material-Fabric001var02-METALROUGH.png',
+                'Material-Fabric001var02-NORMAL.png',
                 
-                'Material-Gold001var01-COLOR.png',
+                'Material-Gold001var01-COLOR.jpg',
                 'Material-Gold001var01-METALROUGH.png',
                 'Material-Gold001var01-NORMAL.png',
                 
                 'Material-Leather002var02-COLOR.jpg',
-                'Material-Leather002var02-METALROUGH.jpg',
-                'Material-Leather002var02-NORMAL.jpg',
+                'Material-Leather002var02-METALROUGH.png',
+                'Material-Leather002var02-NORMAL.png',
                 
-                'Material-Leather003var03-AO.jpg',
                 'Material-Leather003var03-COLOR.jpg',
-                'Material-Leather003var03-METALROUGH.jpg',
-                'Material-Leather003var03-NORMAL.jpg',
+                'Material-Leather003var03-AO.png',
+                'Material-Leather003var03-METALROUGH.png',
+                'Material-Leather003var03-NORMAL.png',
                 
                 'Material-PaintSplatter01var01-COLOR.jpg',
-                'Material-PaintSplatter01var01-METALROUGH.jpg',
-                'Material-PaintSplatter01var01-NORMAL.jpg',
+                'Material-PaintSplatter01var01-METALROUGH.png',
+                'Material-PaintSplatter01var01-NORMAL.png',
                 
-                'Material-Ruby01var02-AO.jpg',
                 'Material-Ruby01var02-COLOR.jpg',
-                'Material-Ruby01var02-METALROUGH.jpg',
-                'Material-Ruby01var02-NORMAL.jpg',
+                'Material-Ruby01var02-AO.png',
+                'Material-Ruby01var02-METALROUGH.png',
+                'Material-Ruby01var02-NORMAL.png',
                 
                 'stitching back COL.png',
-                'stitching back NOR.png',
-                'stitching front COL.png',
-                'stitching front NOR.png'];
+                'stitching front COL.png'];
             for(var i = 0; i < images.length; ++i) {
                 var img = $('<img/>');
                 img[0].src = getMainDir()+mediadir+images[i];
