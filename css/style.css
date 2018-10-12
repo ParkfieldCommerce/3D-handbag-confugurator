@@ -315,3 +315,7 @@ header {
     align-items:center;
     text-align:center;
 }
+
+#configuratorBar{
+    display: none;
+}

@@ -5,9 +5,9 @@
         "g": 1,
         "b": 1
     },
-    "normalMap": "Material-BlueOcean01var02-NORMAL.jpg",
+    "normalMap": "Material-BlueOcean01var02-NORMAL.png",
     "normalScale": 0.025,
-    "metalRoughnessMap": "Material-BlueOcean01var02-METALROUGH.jpg",
+    "metalRoughnessMap": "Material-BlueOcean01var02-METALROUGH.png",
     "metalness": 0,
     "roughness": 0.95,
     "aoMap": null,

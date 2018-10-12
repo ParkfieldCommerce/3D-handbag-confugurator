@@ -5,9 +5,9 @@
         "g": 0.8,
         "b": 0.8
     },
-    "normalMap": "Material-PaintSplatter01var01-NORMAL.jpg",
+    "normalMap": "Material-PaintSplatter01var01-NORMAL.png",
     "normalScale": 0.5,
-    "metalRoughnessMap": "Material-PaintSplatter01var01-METALROUGH.jpg",
+    "metalRoughnessMap": "Material-PaintSplatter01var01-METALROUGH.png",
     "metalness": 0.0,
     "roughness": 0.4,
     "aoMap": null,
