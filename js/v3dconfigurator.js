@@ -34,11 +34,31 @@ $(document).ready(function(){
         app.load(url, function() {
             window.pauseRender = true;
             app.myRender = app.render;
+
+            // only render when necessary
+            var prevCameraPos = app.camera.position.clone();
+            if(window.v3dConfigurator === undefined) {
+                window.v3dConfigurator = {};
+            }
+            window.v3dConfigurator.needsUpdate = true;
             app.render = function(){
                 if(!window.pauseRender) {
-                    app.myRender();
+                    var camDist = app.camera.position.distanceTo(prevCameraPos);
+                    if(camDist > 0.001 || window.v3dConfigurator.needsUpdate) {
+                        app.myRender();
+                        window.v3dConfigurator.needsUpdate = false;
+                    } else {
+                        // not rendering, because nothing changed
+                        // console.log("not rendering");
+                    }
+                    prevCameraPos = app.camera.position.clone();
                 }
             }
+            window.addEventListener('resize', onWindowResize, false);
+            function onWindowResize(){
+                window.v3dConfigurator.needsUpdate = true;
+            }
+            
             // Transparent Background
             app.scene.background = null;
             app.renderer.setClearColor(0x000000, 0);
@@ -146,12 +166,23 @@ $(document).ready(function(){
 
                 var search = window.location.search.substr(1);
                 if(search.length > 0) {
-                    var searchVariations = JSON.parse(LZString.decompressFromEncodedURIComponent(search));
-                    for(var serachKey in searchVariations) {
-                        if (searchVariations.hasOwnProperty(serachKey)) {
-                            $('.changeMat[data-material-name="'+serachKey+'"][data-material-file="'+searchVariations[serachKey]+'"]').trigger('click');
+                    $("#configuratorBar").css("display", "none");
+                    var JSONString = LZString.decompressFromEncodedURIComponent(search);
+                    if(JSONString.length > 2) {
+                        var searchVariations = JSON.parse(JSONString);
+                        for(var serachKey in searchVariations) {
+                            if (searchVariations.hasOwnProperty(serachKey)) {
+                                var currSettings = searchVariations[serachKey];
+                                if(typeof currSettings == 'string') {
+                                    $('.changeMat[data-material-name=\\\''+serachKey+'\\\'][data-material-file=\\\''+currSettings+'\\\']').trigger('click');
+                                } else {
+                                    $('.changeMat[data-material-name="'+serachKey+'"]').data('material-settings', currSettings).trigger('click');
+                                }
+                            }
                         }
                     }
+                } else {
+                    $("#configuratorBar").css("display", "block");
                 }
                 window.pauseRender = false;
             });
@@ -166,13 +197,9 @@ $(document).ready(function(){
                 }
                 var dataMatFile = $(this).data("material-file");
 
-                if(window.v3dConfigurator === undefined) {
-                    window.v3dConfigurator = {};
-                }
                 if(window.v3dConfigurator.currentVariant === undefined) {
                     window.v3dConfigurator.currentVariant = {};
                 }
-                window.v3dConfigurator.currentVariant[dataMatName] = dataMatFile;
                 
                 var material = app.materials.find(function(e){return e.name==dataMatName;})
                 if(typeof material === 'undefined') {
@@ -182,8 +209,10 @@ $(document).ready(function(){
                 var dMatFile = $.Deferred();
                 var matfile;
                 if(typeof dataMatFile === 'undefined') {
+                    window.v3dConfigurator.currentVariant[dataMatName] = dataMatSettings;
                     dMatFile.resolve()
                 } else {
+                    window.v3dConfigurator.currentVariant[dataMatName] = dataMatFile;
                     $.getJSON(getMainDir()+mediadir+dataMatFile, function(data) {
                         matfile = data;
                         dMatFile.resolve();
@@ -293,6 +322,7 @@ $(document).ready(function(){
                         if(typeof dataMatSettings.emissiveIntensity !== 'undefined') {
                             material.emissiveIntensity = dataMatSettings.emissiveIntensity;
                         }
+                        window.v3dConfigurator.needsUpdate = true;
                     });
                 });
             });
@@ -305,6 +335,7 @@ $(document).ready(function(){
             $("#share").click(function(){
                 var variantString = "";
                 var baseURL = window.location.href.split('?')[0];
+                baseURL = baseURL.split('#')[0];
                 if(window.v3dConfigurator !== undefined && window.v3dConfigurator.currentVariant !== undefined) {
                     variantString = JSON.stringify(window.v3dConfigurator.currentVariant);
                 }
