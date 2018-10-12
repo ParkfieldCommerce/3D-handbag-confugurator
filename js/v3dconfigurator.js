@@ -172,7 +172,12 @@ $(document).ready(function(){
                         var searchVariations = JSON.parse(JSONString);
                         for(var serachKey in searchVariations) {
                             if (searchVariations.hasOwnProperty(serachKey)) {
-                                $('.changeMat[data-material-name="'+serachKey+'"][data-material-file="'+searchVariations[serachKey]+'"]').trigger('click');
+                                var currSettings = searchVariations[serachKey];
+                                if(typeof currSettings == 'string') {
+                                    $('.changeMat[data-material-name=\\\''+serachKey+'\\\'][data-material-file=\\\''+currSettings+'\\\']').trigger('click');
+                                } else {
+                                    $('.changeMat[data-material-name="'+serachKey+'"]').data('material-settings', currSettings).trigger('click');
+                                }
                             }
                         }
                     }
@@ -195,7 +200,6 @@ $(document).ready(function(){
                 if(window.v3dConfigurator.currentVariant === undefined) {
                     window.v3dConfigurator.currentVariant = {};
                 }
-                window.v3dConfigurator.currentVariant[dataMatName] = dataMatFile;
                 
                 var material = app.materials.find(function(e){return e.name==dataMatName;})
                 if(typeof material === 'undefined') {
@@ -205,8 +209,10 @@ $(document).ready(function(){
                 var dMatFile = $.Deferred();
                 var matfile;
                 if(typeof dataMatFile === 'undefined') {
+                    window.v3dConfigurator.currentVariant[dataMatName] = dataMatSettings;
                     dMatFile.resolve()
                 } else {
+                    window.v3dConfigurator.currentVariant[dataMatName] = dataMatFile;
                     $.getJSON(getMainDir()+mediadir+dataMatFile, function(data) {
                         matfile = data;
                         dMatFile.resolve();
