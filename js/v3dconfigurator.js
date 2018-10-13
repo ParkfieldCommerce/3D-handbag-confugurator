@@ -152,13 +152,23 @@ $(document).ready(function(){
                             setCameraAngles(coords.polar, coords.azimuth, coords.zoom);
                         }).start();
             });
-            $(".card-link").on('click touchstart',function(){
+            var cardLink = document.querySelectorAll('.card-link');
+            for (var i = 0; i < cardLink.length; i++) {
+              cardLink[i].addEventListener('click', function() {
                 var href = $($(this).attr("href"))[0];
                 var toggleShown = href.classList.contains("show");
                 if(!toggleShown) {
                     $('.changeCam').data("camera-polar", $(this).data("camera-polar")).data("camera-azimuth", $(this).data("camera-azimuth")).data("camera-zoom", $(this).data("camera-zoom")).trigger('click');
                 }
-            });
+              });
+            }
+            // $(".card-link").on('click touchstart',function(){
+            //     var href = $($(this).attr("href"))[0];
+            //     var toggleShown = href.classList.contains("show");
+            //     if(!toggleShown) {
+            //         $('.changeCam').data("camera-polar", $(this).data("camera-polar")).data("camera-azimuth", $(this).data("camera-azimuth")).data("camera-zoom", $(this).data("camera-zoom")).trigger('click');
+            //     }
+            // });
             function animate(time) {
                 requestAnimationFrame( function(time){animate(time);} );
                 TWEEN.update(time);
