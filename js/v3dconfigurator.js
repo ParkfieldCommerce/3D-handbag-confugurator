@@ -152,23 +152,24 @@ $(document).ready(function(){
                             setCameraAngles(coords.polar, coords.azimuth, coords.zoom);
                         }).start();
             });
-            var cardLink = document.querySelectorAll('.card-link');
-            for (var i = 0; i < cardLink.length; i++) {
-              cardLink[i].addEventListener('click', function() {
+            // Fire Events
+            function eventFire(el, etype){
+              if (el.fireEvent) {
+                el.fireEvent('on' + etype);
+              } else {
+                var evObj = document.createEvent('Events');
+                evObj.initEvent(etype, true, false);
+                el.dispatchEvent(evObj);
+              }
+            }
+            $(".card-link").on('click touchstart',function(){
                 var href = $($(this).attr("href"))[0];
                 var toggleShown = href.classList.contains("show");
                 if(!toggleShown) {
                     $('.changeCam').data("camera-polar", $(this).data("camera-polar")).data("camera-azimuth", $(this).data("camera-azimuth")).data("camera-zoom", $(this).data("camera-zoom")).trigger('click');
+                    $('.changeCam').data("camera-polar", $(this).data("camera-polar")).data("camera-azimuth", $(this).data("camera-azimuth")).data("camera-zoom", $(this).data("camera-zoom")).trigger('touchstart');
                 }
-              });
-            }
-            // $(".card-link").on('click touchstart',function(){
-            //     var href = $($(this).attr("href"))[0];
-            //     var toggleShown = href.classList.contains("show");
-            //     if(!toggleShown) {
-            //         $('.changeCam').data("camera-polar", $(this).data("camera-polar")).data("camera-azimuth", $(this).data("camera-azimuth")).data("camera-zoom", $(this).data("camera-zoom")).trigger('click');
-            //     }
-            // });
+            });
             function animate(time) {
                 requestAnimationFrame( function(time){animate(time);} );
                 TWEEN.update(time);
