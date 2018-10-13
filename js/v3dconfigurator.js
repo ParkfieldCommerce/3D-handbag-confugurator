@@ -152,7 +152,7 @@ $(document).ready(function(){
                             setCameraAngles(coords.polar, coords.azimuth, coords.zoom);
                         }).start();
             });
-            $(".card-link").on('click touch',function(){
+            $(".card-link").on('click touchstart',function(){
                 var href = $($(this).attr("href"))[0];
                 var toggleShown = href.classList.contains("show");
                 if(!toggleShown) {
