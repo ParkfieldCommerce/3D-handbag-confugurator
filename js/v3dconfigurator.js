@@ -152,6 +152,13 @@ $(document).ready(function(){
                             setCameraAngles(coords.polar, coords.azimuth, coords.zoom);
                         }).start();
             });
+            $(".card-link").click(function(){
+                var href = $($(this).attr("href"))[0];
+                var toggleShown = href.classList.contains("show");
+                if(!toggleShown) {
+                    $('.changeCam').data("camera-polar", $(this).data("camera-polar")).data("camera-azimuth", $(this).data("camera-azimuth")).data("camera-zoom", $(this).data("camera-zoom")).trigger('click');
+                }
+            });
             function animate(time) {
                 requestAnimationFrame( function(time){animate(time);} );
                 TWEEN.update(time);
