@@ -166,8 +166,7 @@ $(document).ready(function(){
                 var href = $($(this).attr("href"))[0];
                 var toggleShown = href.classList.contains("show");
                 if(!toggleShown) {
-                    $('.changeCam').data("camera-polar", $(this).data("camera-polar")).data("camera-azimuth", $(this).data("camera-azimuth")).data("camera-zoom", $(this).data("camera-zoom")).trigger('click');
-                    $('.changeCam').data("camera-polar", $(this).data("camera-polar")).data("camera-azimuth", $(this).data("camera-azimuth")).data("camera-zoom", $(this).data("camera-zoom")).trigger('touchstart');
+                    $('.changeCam').data("camera-polar", $(this).data("camera-polar")).data("camera-azimuth", $(this).data("camera-azimuth")).data("camera-zoom", $(this).data("camera-zoom")).click();
                 }
             });
             function animate(time) {
