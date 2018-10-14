@@ -181,11 +181,14 @@ $(document).ready(function(){
                             if (searchVariations.hasOwnProperty(serachKey)) {
                                 var currSettings = searchVariations[serachKey];
                                 changeMatPromises[changeMatPromises.length] = $.Deferred();
-                                let currPromise = changeMatPromises[changeMatPromises.length-1];
+                                var currPromise = changeMatPromises[changeMatPromises.length-1];
+                                function myResolve(p) {
+                                    return function() { p.resolve(); }
+                                }
                                 if(typeof currSettings == 'string') {
-                                    changeMat(serachKey, undefined, currSettings, () => {currPromise.resolve();});
+                                    changeMat(serachKey, undefined, currSettings, myResolve(currPromise));
                                 } else {
-                                    changeMat(serachKey, currSettings, undefined, () => {currPromise.resolve();});
+                                    changeMat(serachKey, currSettings, undefined, myResolve(currPromise));
                                 }
                             }
                         }
@@ -336,13 +339,13 @@ $(document).ready(function(){
         }
         function runCode() {
             $(".changeMat").click(function(){
-                changeMat($(this).data("material-name"), $(this).data("material-settings"), $(this).data("material-file"), () => {window.v3dConfigurator.needsUpdate = true;});
+                changeMat($(this).data("material-name"), $(this).data("material-settings"), $(this).data("material-file"), function() {window.v3dConfigurator.needsUpdate = true;});
             });
             $("#startover").click(function(){
-                changeMat("Front", undefined, "Material-Leather002var02.json", () => {window.v3dConfigurator.needsUpdate = true;});
-                changeMat("Back", undefined, "Material-Leather003var03.json", () => {window.v3dConfigurator.needsUpdate = true;});
-                changeMat("Hand Straps", undefined, "Material-Leather003var03.json", () => {window.v3dConfigurator.needsUpdate = true;});
-                changeMat("Buckles and Rivets", undefined, "Material-Gold001var01.json", () => {window.v3dConfigurator.needsUpdate = true;});
+                changeMat("Front", undefined, "Material-Leather002var02.json", function() {window.v3dConfigurator.needsUpdate = true;});
+                changeMat("Back", undefined, "Material-Leather003var03.json", function() {window.v3dConfigurator.needsUpdate = true;});
+                changeMat("Hand Straps", undefined, "Material-Leather003var03.json", function() {window.v3dConfigurator.needsUpdate = true;});
+                changeMat("Buckles and Rivets", undefined, "Material-Gold001var01.json", function() {window.v3dConfigurator.needsUpdate = true;});
             });
             $("#share").click(function(){
                 var variantString = "";
