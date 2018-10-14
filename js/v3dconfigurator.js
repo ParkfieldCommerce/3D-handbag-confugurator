@@ -32,7 +32,6 @@ $(document).ready(function(){
             new myLoader({ container: 'container3d' }));
 
         app.load(url, function() {
-            window.pauseRender = true;
             app.myRender = app.render;
 
             // only render when necessary
@@ -42,17 +41,19 @@ $(document).ready(function(){
             }
             window.v3dConfigurator.needsUpdate = true;
             app.render = function(){
-                if(!window.pauseRender) {
-                    var camDist = app.camera.position.distanceTo(prevCameraPos);
-                    if(camDist > 0.001 || window.v3dConfigurator.needsUpdate) {
-                        app.myRender();
-                        window.v3dConfigurator.needsUpdate = false;
-                    } else {
-                        // not rendering, because nothing changed
-                        // console.log("not rendering");
+                var camDist = app.camera.position.distanceTo(prevCameraPos);
+                if(camDist > 0.001 || window.v3dConfigurator.needsUpdate) {
+                    app.myRender();
+                    window.v3dConfigurator.needsUpdate = false;
+                    if(window.firstFrameDone === undefined) {
+                        app.renderer.clear();
+                        window.firstFrameDone = true;
                     }
-                    prevCameraPos = app.camera.position.clone();
+                } else {
+                    // not rendering, because nothing changed
+                    // console.log("not rendering");
                 }
+                prevCameraPos = app.camera.position.clone();
             }
             window.addEventListener('resize', onWindowResize, false);
             function onWindowResize(){
@@ -152,16 +153,6 @@ $(document).ready(function(){
                             setCameraAngles(coords.polar, coords.azimuth, coords.zoom);
                         }).start();
             });
-            // Fire Events
-            function eventFire(el, etype){
-              if (el.fireEvent) {
-                el.fireEvent('on' + etype);
-              } else {
-                var evObj = document.createEvent('Events');
-                evObj.initEvent(etype, true, false);
-                el.dispatchEvent(evObj);
-              }
-            }
             $(".card-link").on('click touchstart',function(){
                 var href = $($(this).attr("href"))[0];
                 var toggleShown = href.classList.contains("show");
@@ -185,167 +176,173 @@ $(document).ready(function(){
                     var JSONString = LZString.decompressFromEncodedURIComponent(search);
                     if(JSONString.length > 2) {
                         var searchVariations = JSON.parse(JSONString);
+                        var changeMatPromises = [];
                         for(var serachKey in searchVariations) {
                             if (searchVariations.hasOwnProperty(serachKey)) {
                                 var currSettings = searchVariations[serachKey];
+                                changeMatPromises[changeMatPromises.length] = $.Deferred();
+                                let currPromise = changeMatPromises[changeMatPromises.length-1];
                                 if(typeof currSettings == 'string') {
-                                    $(".changeMat").data("material-name", serachKey).data("material-file", currSettings).trigger('click');
+                                    changeMat(serachKey, undefined, currSettings, () => {currPromise.resolve();});
                                 } else {
-                                    $(".changeMat").data("material-name", serachKey).data("material-settings", currSettings).trigger('click');
+                                    changeMat(serachKey, currSettings, undefined, () => {currPromise.resolve();});
                                 }
                             }
                         }
+                        $.when.apply($, changeMatPromises).done(function(){
+                            window.v3dConfigurator.needsUpdate = true;
+                        });
                     }
                 } else {
                     $("#configuratorBar").css("display", "block");
+                    window.v3dConfigurator.needsUpdate = true;
                 }
-                window.pauseRender = false;
             });
         });
 
-        function runCode() {
-            $(".changeMat").click(function(){
-                var dataMatName = $(this).data("material-name");
-                var dataMatSettings = $(this).data("material-settings");
-                if(dataMatSettings === undefined || dataMatSettings == "") {
-                    dataMatSettings = {};
-                }
-                var dataMatFile = $(this).data("material-file");
+        function changeMat(dataMatName, dataMatSettings, dataMatFile, cb) {
+            if(dataMatSettings === undefined || dataMatSettings == "") {
+                dataMatSettings = {};
+            }
 
-                if(window.v3dConfigurator.currentVariant === undefined) {
-                    window.v3dConfigurator.currentVariant = {};
+            if(window.v3dConfigurator.currentVariant === undefined) {
+                window.v3dConfigurator.currentVariant = {};
+            }
+
+            var material = app.materials.find(function(e){return e.name==dataMatName;})
+            if(typeof material === 'undefined') {
+                return;
+            }
+
+            var dMatFile = $.Deferred();
+            var matfile;
+            if(typeof dataMatFile === 'undefined') {
+                window.v3dConfigurator.currentVariant[dataMatName] = dataMatSettings;
+                dMatFile.resolve()
+            } else {
+                window.v3dConfigurator.currentVariant[dataMatName] = dataMatFile;
+                $.getJSON(getMainDir()+mediadir+dataMatFile, function(data) {
+                    matfile = data;
+                    dMatFile.resolve();
+                });
+            }
+            $.when(dMatFile).done(function() {
+                if(typeof matfile !== 'undefined') {
+                    var allSettings = ["map", "color", "normalMap", "metalRoughnessMap", "metalness", "roughness", "normalScale", "aoMap", "aoMapIntensity", "emissive", "emissiveMap", "emissiveIntensity"];
+                    for(var i = 0; i < allSettings.length; i++) {
+                        if(typeof dataMatSettings[allSettings[i]] === 'undefined' && typeof matfile[allSettings[i]] !== 'undefined') {
+                            dataMatSettings[allSettings[i]] = matfile[allSettings[i]];
+                        }
+                    }
                 }
 
-                var material = app.materials.find(function(e){return e.name==dataMatName;})
-                if(typeof material === 'undefined') {
-                    return;
-                }
-
-                var dMatFile = $.Deferred();
-                var matfile;
-                if(typeof dataMatFile === 'undefined') {
-                    window.v3dConfigurator.currentVariant[dataMatName] = dataMatSettings;
-                    dMatFile.resolve()
+                var dMap = $.Deferred();
+                var map;
+                if(typeof dataMatSettings.map === 'undefined' || dataMatSettings.map == null) {
+                    map = null;
+                    dMap.resolve();
                 } else {
-                    window.v3dConfigurator.currentVariant[dataMatName] = dataMatFile;
-                    $.getJSON(getMainDir()+mediadir+dataMatFile, function(data) {
-                        matfile = data;
-                        dMatFile.resolve();
+                    map = new THREE.TextureLoader().load(getMainDir()+mediadir+dataMatSettings.map, function(){
+                        dMap.resolve();
                     });
                 }
-                $.when(dMatFile).done(function() {
-                    if(typeof matfile !== 'undefined') {
-                        var allSettings = ["map", "color", "normalMap", "metalRoughnessMap", "metalness", "roughness", "normalScale", "aoMap", "aoMapIntensity", "emissive", "emissiveMap", "emissiveIntensity"];
-                        for(var i = 0; i < allSettings.length; i++) {
-                            if(typeof dataMatSettings[allSettings[i]] === 'undefined' && typeof matfile[allSettings[i]] !== 'undefined') {
-                                dataMatSettings[allSettings[i]] = matfile[allSettings[i]];
-                            }
-                        }
-                    }
 
-                    var dMap = $.Deferred();
-                    var map;
-                    if(typeof dataMatSettings.map === 'undefined' || dataMatSettings.map == null) {
-                        map = null;
-                        dMap.resolve();
-                    } else {
-                        map = new THREE.TextureLoader().load(getMainDir()+mediadir+dataMatSettings.map, function(){
-                            dMap.resolve();
-                        });
-                    }
-
-                    var dNormalMap = $.Deferred();
-                    var normalMap;
-                    if(typeof dataMatSettings.normalMap === 'undefined' || dataMatSettings.normalMap == null) {
-                        normalMap = null;
+                var dNormalMap = $.Deferred();
+                var normalMap;
+                if(typeof dataMatSettings.normalMap === 'undefined' || dataMatSettings.normalMap == null) {
+                    normalMap = null;
+                    dNormalMap.resolve();
+                } else {
+                    normalMap = new THREE.TextureLoader().load(getMainDir()+mediadir+dataMatSettings.normalMap, function(){
                         dNormalMap.resolve();
-                    } else {
-                        normalMap = new THREE.TextureLoader().load(getMainDir()+mediadir+dataMatSettings.normalMap, function(){
-                            dNormalMap.resolve();
-                        });
-                    }
-
-                    var dMetalRoughnessMap = $.Deferred();
-                    var metalRoughnessMap;
-                    if(typeof dataMatSettings.metalRoughnessMap === 'undefined' || dataMatSettings.metalRoughnessMap == null) {
-                        metalRoughnessMap = null;
-                        dMetalRoughnessMap.resolve();
-                    } else {
-                        metalRoughnessMap = new THREE.TextureLoader().load(getMainDir()+mediadir+dataMatSettings.metalRoughnessMap, function(){
-                            dMetalRoughnessMap.resolve();
-                        });
-                    }
-
-                    var dAOMap = $.Deferred();
-                    var aoMap;
-                    if(typeof dataMatSettings.aoMap === 'undefined' || dataMatSettings.aoMap == null) {
-                        aoMap = null;
-                        dAOMap.resolve();
-                    } else {
-                        aoMap = new THREE.TextureLoader().load(getMainDir()+mediadir+dataMatSettings.aoMap, function(){
-                            dAOMap.resolve();
-                        });
-                    }
-
-                    var dEmissiveMap = $.Deferred();
-                    var emissiveMap;
-                    if(typeof dataMatSettings.emissiveMap === 'undefined' || dataMatSettings.emissiveMap == null) {
-                        emissiveMap = null;
-                        dEmissiveMap.resolve();
-                    } else {
-                        emissiveMap = new THREE.TextureLoader().load(getMainDir()+mediadir+dataMatSettings.emissiveMap, function(){
-                            dEmissiveMap.resolve();
-                        });
-                    }
-
-                    $.when(dMap, dNormalMap, dMetalRoughnessMap, dAOMap, dEmissiveMap).done(function() {
-                        if(typeof map !== 'undefined') {
-                            material.map = map;
-                        }
-                        if(typeof normalMap !== 'undefined') {
-                            material.normalMap = normalMap;
-                        }
-                        if(typeof metalRoughnessMap !== 'undefined') {
-                            material.roughnessMap = metalRoughnessMap;
-                            material.metalnessMap = metalRoughnessMap;
-                        }
-                        if(typeof aoMap !== 'undefined') {
-                            material.aoMap = aoMap;
-                        }
-                        if(typeof emissiveMap !== 'undefined') {
-                            material.emissiveMap = emissiveMap;
-                        }
-                        if(typeof dataMatSettings.color !== 'undefined') {
-                            material.color = dataMatSettings.color;
-                        }
-                        if(typeof dataMatSettings.metalness !== 'undefined') {
-                            material.metalness = dataMatSettings.metalness;
-                        }
-                        if(typeof dataMatSettings.roughness !== 'undefined') {
-                            material.roughness = dataMatSettings.roughness;
-                        }
-                        if(typeof dataMatSettings.normalScale !== 'undefined') {
-                            material.normalScale.x = dataMatSettings.normalScale;
-                            material.normalScale.y = dataMatSettings.normalScale;
-                        }
-                        if(typeof dataMatSettings.aoMapIntensity !== 'undefined') {
-                            material.aoMapIntensity = dataMatSettings.aoMapIntensity;
-                        }
-                        if(typeof dataMatSettings.emissive !== 'undefined') {
-                            material.emissive = dataMatSettings.emissive;
-                        }
-                        if(typeof dataMatSettings.emissiveIntensity !== 'undefined') {
-                            material.emissiveIntensity = dataMatSettings.emissiveIntensity;
-                        }
-                        window.v3dConfigurator.needsUpdate = true;
                     });
+                }
+
+                var dMetalRoughnessMap = $.Deferred();
+                var metalRoughnessMap;
+                if(typeof dataMatSettings.metalRoughnessMap === 'undefined' || dataMatSettings.metalRoughnessMap == null) {
+                    metalRoughnessMap = null;
+                    dMetalRoughnessMap.resolve();
+                } else {
+                    metalRoughnessMap = new THREE.TextureLoader().load(getMainDir()+mediadir+dataMatSettings.metalRoughnessMap, function(){
+                        dMetalRoughnessMap.resolve();
+                    });
+                }
+
+                var dAOMap = $.Deferred();
+                var aoMap;
+                if(typeof dataMatSettings.aoMap === 'undefined' || dataMatSettings.aoMap == null) {
+                    aoMap = null;
+                    dAOMap.resolve();
+                } else {
+                    aoMap = new THREE.TextureLoader().load(getMainDir()+mediadir+dataMatSettings.aoMap, function(){
+                        dAOMap.resolve();
+                    });
+                }
+
+                var dEmissiveMap = $.Deferred();
+                var emissiveMap;
+                if(typeof dataMatSettings.emissiveMap === 'undefined' || dataMatSettings.emissiveMap == null) {
+                    emissiveMap = null;
+                    dEmissiveMap.resolve();
+                } else {
+                    emissiveMap = new THREE.TextureLoader().load(getMainDir()+mediadir+dataMatSettings.emissiveMap, function(){
+                        dEmissiveMap.resolve();
+                    });
+                }
+
+                $.when(dMap, dNormalMap, dMetalRoughnessMap, dAOMap, dEmissiveMap).done(function() {
+                    if(typeof map !== 'undefined') {
+                        material.map = map;
+                    }
+                    if(typeof normalMap !== 'undefined') {
+                        material.normalMap = normalMap;
+                    }
+                    if(typeof metalRoughnessMap !== 'undefined') {
+                        material.roughnessMap = metalRoughnessMap;
+                        material.metalnessMap = metalRoughnessMap;
+                    }
+                    if(typeof aoMap !== 'undefined') {
+                        material.aoMap = aoMap;
+                    }
+                    if(typeof emissiveMap !== 'undefined') {
+                        material.emissiveMap = emissiveMap;
+                    }
+                    if(typeof dataMatSettings.color !== 'undefined') {
+                        material.color = dataMatSettings.color;
+                    }
+                    if(typeof dataMatSettings.metalness !== 'undefined') {
+                        material.metalness = dataMatSettings.metalness;
+                    }
+                    if(typeof dataMatSettings.roughness !== 'undefined') {
+                        material.roughness = dataMatSettings.roughness;
+                    }
+                    if(typeof dataMatSettings.normalScale !== 'undefined') {
+                        material.normalScale.x = dataMatSettings.normalScale;
+                        material.normalScale.y = dataMatSettings.normalScale;
+                    }
+                    if(typeof dataMatSettings.aoMapIntensity !== 'undefined') {
+                        material.aoMapIntensity = dataMatSettings.aoMapIntensity;
+                    }
+                    if(typeof dataMatSettings.emissive !== 'undefined') {
+                        material.emissive = dataMatSettings.emissive;
+                    }
+                    if(typeof dataMatSettings.emissiveIntensity !== 'undefined') {
+                        material.emissiveIntensity = dataMatSettings.emissiveIntensity;
+                    }
+                    if(cb !== undefined) { cb(); }
                 });
             });
+        }
+        function runCode() {
+            $(".changeMat").click(function(){
+                changeMat($(this).data("material-name"), $(this).data("material-settings"), $(this).data("material-file"), () => {window.v3dConfigurator.needsUpdate = true;});
+            });
             $("#startover").click(function(){
-                $('.changeMat[data-material-name="Front"][data-material-file="Material-Leather002var02.json"]').trigger('click');
-                $('.changeMat[data-material-name="Back"][data-material-file="Material-Leather003var03.json"]').trigger('click');
-                $('.changeMat[data-material-name="Hand Straps"][data-material-file="Material-Leather003var03.json"]').trigger('click');
-                $('.changeMat[data-material-name="Buckles and Rivets"][data-material-file="Material-Gold001var01.json"]').trigger('click');
+                changeMat("Front", undefined, "Material-Leather002var02.json", () => {window.v3dConfigurator.needsUpdate = true;});
+                changeMat("Back", undefined, "Material-Leather003var03.json", () => {window.v3dConfigurator.needsUpdate = true;});
+                changeMat("Hand Straps", undefined, "Material-Leather003var03.json", () => {window.v3dConfigurator.needsUpdate = true;});
+                changeMat("Buckles and Rivets", undefined, "Material-Gold001var01.json", () => {window.v3dConfigurator.needsUpdate = true;});
             });
             $("#share").click(function(){
                 var variantString = "";
@@ -354,7 +351,6 @@ $(document).ready(function(){
                 if(window.v3dConfigurator !== undefined && window.v3dConfigurator.currentVariant !== undefined) {
                     variantString = JSON.stringify(window.v3dConfigurator.currentVariant);
                 }
-                //$('#Field5').val('http://localhost/parkfield-event/index.html?'+encodeURIComponent('[{"name":"Front","file":"Material-Leather002var02.json"},{"name":"Back","file":"Material-AbstractAcrylic01var01.json"}]'));
                 $('#Field5').val(baseURL+'?'+LZString.compressToEncodedURIComponent(variantString));
                 $('#shareform').css('display', 'block');
                 $('#bg-overlay').css('display', 'block');
