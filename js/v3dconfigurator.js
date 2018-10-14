@@ -12,7 +12,7 @@ function getMainDir() {
     var the_arr = mydir.split('/');
     the_arr.pop();
     the_arr.pop();
-        
+
     return the_arr.join('/')+"/";
 }
 
@@ -28,7 +28,7 @@ $(document).ready(function(){
         }
     }
     if($('div#container3d').length) {
-        app = new v3d.App('container3d', {alpha: true}, 
+        app = new v3d.App('container3d', {alpha: true},
             new myLoader({ container: 'container3d' }));
 
         app.load(url, function() {
@@ -58,12 +58,12 @@ $(document).ready(function(){
             function onWindowResize(){
                 window.v3dConfigurator.needsUpdate = true;
             }
-            
+
             // Transparent Background
             app.scene.background = null;
             app.renderer.setClearColor(0x000000, 0);
             app.scene.children.find(function(e){return e.name=="Ambient_Scene";}).visible = false;
-            
+
             // Shadow Catcher Material
             var material = new THREE.ShadowMaterial();
             material.opacity = 0.2;
@@ -71,48 +71,48 @@ $(document).ready(function(){
             //material.side = THREE.DoubleSide;
             app.scene.children.find(function(e){return e.name=="ShadowPlane";}).material = material;
             material.needsUpdate = true;
-            
+
             // Preload
             var imagePromises = [];
-            var images = 
+            var images =
                ['Material-AbstractAcrylic01var01-COLOR.jpg',
                 'Material-AbstractAcrylic01var01-METALROUGH.png',
                 'Material-AbstractAcrylic01var01-NORMAL.png',
-                
+
                 'Material-Aluminum001var01-COLOR.jpg',
                 'Material-Aluminum001var01-METALROUGH.png',
                 'Material-Aluminum001var01-NORMAL.png',
-                
+
                 'Material-BlueOcean01var02-COLOR.jpg',
                 'Material-BlueOcean01var02-METALROUGH.png',
                 'Material-BlueOcean01var02-NORMAL.png',
-                
+
                 'Material-Fabric001var02-COLOR.jpg',
                 'Material-Fabric001var02-METALROUGH.png',
                 'Material-Fabric001var02-NORMAL.png',
-                
+
                 'Material-Gold001var01-COLOR.jpg',
                 'Material-Gold001var01-METALROUGH.png',
                 'Material-Gold001var01-NORMAL.png',
-                
+
                 'Material-Leather002var02-COLOR.jpg',
                 'Material-Leather002var02-METALROUGH.png',
                 'Material-Leather002var02-NORMAL.png',
-                
+
                 'Material-Leather003var03-COLOR.jpg',
                 'Material-Leather003var03-AO.png',
                 'Material-Leather003var03-METALROUGH.png',
                 'Material-Leather003var03-NORMAL.png',
-                
+
                 'Material-PaintSplatter01var01-COLOR.jpg',
                 'Material-PaintSplatter01var01-METALROUGH.png',
                 'Material-PaintSplatter01var01-NORMAL.png',
-                
+
                 'Material-Ruby01var02-COLOR.jpg',
                 'Material-Ruby01var02-AO.png',
                 'Material-Ruby01var02-METALROUGH.png',
                 'Material-Ruby01var02-NORMAL.png',
-                
+
                 'stitching back COL.png',
                 'stitching front COL.png'];
             for(var i = 0; i < images.length; ++i) {
@@ -130,7 +130,7 @@ $(document).ready(function(){
             function setCameraAngles(polar, azimuth, zoom) {
                 var Azimuth_axis = new THREE.Vector3(0, 1, 0);
                 var Polar_axis = new THREE.Vector3(1, 0, 0);
-                
+
                 var CameraPos = new THREE.Vector3(0, 0, 6-zoom);
                 CameraPos.applyAxisAngle(Polar_axis, polar);
                 CameraPos.applyAxisAngle(Azimuth_axis, azimuth);
@@ -152,11 +152,21 @@ $(document).ready(function(){
                             setCameraAngles(coords.polar, coords.azimuth, coords.zoom);
                         }).start();
             });
-            $(".card-link").click(function(){
+            // Fire Events
+            function eventFire(el, etype){
+              if (el.fireEvent) {
+                el.fireEvent('on' + etype);
+              } else {
+                var evObj = document.createEvent('Events');
+                evObj.initEvent(etype, true, false);
+                el.dispatchEvent(evObj);
+              }
+            }
+            $(".card-link").on('click touchstart',function(){
                 var href = $($(this).attr("href"))[0];
                 var toggleShown = href.classList.contains("show");
                 if(!toggleShown) {
-                    $('.changeCam').data("camera-polar", $(this).data("camera-polar")).data("camera-azimuth", $(this).data("camera-azimuth")).data("camera-zoom", $(this).data("camera-zoom")).trigger('click');
+                    $('.changeCam').data("camera-polar", $(this).data("camera-polar")).data("camera-azimuth", $(this).data("camera-azimuth")).data("camera-zoom", $(this).data("camera-zoom")).click();
                 }
             });
             function animate(time) {
@@ -192,7 +202,7 @@ $(document).ready(function(){
                 window.pauseRender = false;
             });
         });
-          
+
         function runCode() {
             $(".changeMat").click(function(){
                 var dataMatName = $(this).data("material-name");
@@ -205,12 +215,12 @@ $(document).ready(function(){
                 if(window.v3dConfigurator.currentVariant === undefined) {
                     window.v3dConfigurator.currentVariant = {};
                 }
-                
+
                 var material = app.materials.find(function(e){return e.name==dataMatName;})
                 if(typeof material === 'undefined') {
                     return;
                 }
-                
+
                 var dMatFile = $.Deferred();
                 var matfile;
                 if(typeof dataMatFile === 'undefined') {
@@ -232,7 +242,7 @@ $(document).ready(function(){
                             }
                         }
                     }
-                    
+
                     var dMap = $.Deferred();
                     var map;
                     if(typeof dataMatSettings.map === 'undefined' || dataMatSettings.map == null) {
@@ -243,7 +253,7 @@ $(document).ready(function(){
                             dMap.resolve();
                         });
                     }
-                    
+
                     var dNormalMap = $.Deferred();
                     var normalMap;
                     if(typeof dataMatSettings.normalMap === 'undefined' || dataMatSettings.normalMap == null) {
@@ -254,7 +264,7 @@ $(document).ready(function(){
                             dNormalMap.resolve();
                         });
                     }
-                    
+
                     var dMetalRoughnessMap = $.Deferred();
                     var metalRoughnessMap;
                     if(typeof dataMatSettings.metalRoughnessMap === 'undefined' || dataMatSettings.metalRoughnessMap == null) {
@@ -265,7 +275,7 @@ $(document).ready(function(){
                             dMetalRoughnessMap.resolve();
                         });
                     }
-                    
+
                     var dAOMap = $.Deferred();
                     var aoMap;
                     if(typeof dataMatSettings.aoMap === 'undefined' || dataMatSettings.aoMap == null) {
@@ -276,7 +286,7 @@ $(document).ready(function(){
                             dAOMap.resolve();
                         });
                     }
-                    
+
                     var dEmissiveMap = $.Deferred();
                     var emissiveMap;
                     if(typeof dataMatSettings.emissiveMap === 'undefined' || dataMatSettings.emissiveMap == null) {
@@ -287,7 +297,7 @@ $(document).ready(function(){
                             dEmissiveMap.resolve();
                         });
                     }
-                    
+
                     $.when(dMap, dNormalMap, dMetalRoughnessMap, dAOMap, dEmissiveMap).done(function() {
                         if(typeof map !== 'undefined') {
                             material.map = map;
