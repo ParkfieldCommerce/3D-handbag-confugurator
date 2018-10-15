@@ -3,7 +3,7 @@ $(document).ready(function () {
 
 //+++++++++++++++++++++++++++++++++++++++++++
 //     Jquery Code Start
-//+++++++++++++++++++++++++++++++++++++++++++     
+//+++++++++++++++++++++++++++++++++++++++++++
 
     $(".box1 li a").click(function(e){
         e.preventDefault();
@@ -61,6 +61,6 @@ $(document).ready(function () {
 
     });
 
-  
+
 });
 };

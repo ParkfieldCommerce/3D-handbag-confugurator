@@ -249,6 +249,16 @@
   <script src="js/lz-string.min.js"></script>
   <script src="js/v3dconfigurator.js"></script>
   <script src="js/tween.js"></script>
+  <script>
+    document.querySelector('#bg-overlay').addEventListener('click', function(e) {
+      var target = e.target.closest('#bg-overlay');
+      if (target) {
+        console.log('hello!');
+        this.style.display = 'none';
+        document.querySelector('#shareform').style.display = 'none';
+      }
+    });
+  </script>
 
 </body>
 
