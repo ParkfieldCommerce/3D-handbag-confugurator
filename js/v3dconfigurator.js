@@ -5,15 +5,7 @@ var mediadir = 'media/';
 var url = 'media/popbag-medium.gltf';
 
 function getMainDir() {
-    var scripts= document.getElementsByTagName('script');
-    var path= scripts[scripts.length-1].src.split('?')[0];      // remove any ?query
-    var mydir= path.split('/').slice(0, -1).join('/')+'/';  // remove last filename part of path
-
-    var the_arr = mydir.split('/');
-    the_arr.pop();
-    the_arr.pop();
-
-    return the_arr.join('/')+"/";
+    return window.location.href.substr(0, window.location.href.lastIndexOf('/')) + '/';
 }
 
 $(document).ready(function(){
